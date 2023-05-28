@@ -1,0 +1,96 @@
+<html>
+<head>
+	<title>jigsaw puzzle Game</title>
+	<style>
+		button
+		{
+			height: 14%;
+			width: 8%;
+			font-size: 30px;
+		}
+		
+	</style>
+</head>
+<body>
+	<div class="main">
+		<button onclick="myfun(this)"></button>
+		<button onclick="myfun(this)"></button>
+		<button onclick="myfun(this)"></button>
+		<button onclick="myfun(this)"></button>
+		<br>
+		<button onclick="myfun(this)"></button>
+		<button onclick="myfun(this)"></button>
+		<button onclick="myfun(this)"></button>
+		<button onclick="myfun(this)"></button>
+		<br>
+		<button onclick="myfun(this)"></button>
+		<button onclick="myfun(this)"></button>
+		<button onclick="myfun(this)"></button>
+		<button onclick="myfun(this)"></button>
+		<br>
+		<button onclick="myfun(this)"></button>
+		<button onclick="myfun(this)"></button>
+		<button onclick="myfun(this)"></button>
+		<button onclick="myfun(this)"></button>
+
+	</div>
+</body>
+<script type="text/javascript">
+	var emptyCell= {raw:3, col:3};
+	var puzzleSolved=false;
+
+	const st = new Set();
+	max=15;
+	min=1;
+	while(st.size<15)
+	{
+		var n=Math.floor(Math.random() * (max - min + 1) ) + min;
+		if(st.has(n)==false)
+		{
+			st.add(n);
+		}
+	}
+	btn=document.getElementsByTagName("button");
+	i=0;
+	for (const item of st.values()) 
+	{
+		btn[i].innerHTML=item;
+		i++;
+	}
+
+	
+	let emptyIndex = 15;
+
+function myfun(button) {
+  const index = Array.from(btn).indexOf(button);
+  
+  if (index === emptyIndex) {
+    return;
+  }
+  
+  // Check if the clicked button is adjacent to the empty cell
+  const rowDiff = Math.abs(Math.floor(index / 4) - Math.floor(emptyIndex / 4));
+  const colDiff = Math.abs(index % 4 - emptyIndex % 4);
+  if (rowDiff + colDiff !== 1) {
+    return;
+  }
+  
+  // Swap the contents of the clicked button and the empty cell
+  btn[emptyIndex].innerHTML = button.innerHTML;
+  button.innerHTML = "";
+  emptyIndex = index;
+  
+  // Check if the puzzle is solved
+  for (let i = 0; i < btn.length; i++) {
+    if (btn[i].innerHTML !== "" && btn[i].innerHTML != i + 1) {
+      return;
+    }
+  }
+  
+  alert("Congratulations! You solved the puzzle!");
+}
+
+	
+	
+</script>
+</html>
